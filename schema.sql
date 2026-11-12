@@ -227,6 +227,21 @@ CREATE TABLE `reviews` (
 
 
 -- ------------------------------------------------------------------------------
+-- 17. Homepage Content & Editorial CMS
+-- ------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `website_content`;
+CREATE TABLE `website_content` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `hero_headline` VARCHAR(255) NOT NULL,
+  `hero_subtitle` VARCHAR(255) NOT NULL,
+  `hero_description` TEXT NOT NULL,
+  `promo_headline` VARCHAR(255) NOT NULL,
+  `promo_cta_text` VARCHAR(100) NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ------------------------------------------------------------------------------
 -- 18. Store Configuration & Logistics Settings
 -- ------------------------------------------------------------------------------
 DROP TABLE IF EXISTS `store_settings`;
@@ -241,6 +256,21 @@ CREATE TABLE `store_settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
+-- ------------------------------------------------------------------------------
+-- 19. Administrator Profile
+-- ------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `profile`;
+CREATE TABLE `profile` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(120) NOT NULL,
+  `email` VARCHAR(191) NOT NULL,
+  `phone` VARCHAR(30) NULL,
+  `role` VARCHAR(50) NOT NULL DEFAULT 'Store Director',
+  `password_hash` VARCHAR(255) NULL,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- ==============================================================================
 -- INITIAL SEED DATA (Synchronized with SHOES LAB Prototype)
 -- ==============================================================================
@@ -248,4 +278,15 @@ CREATE TABLE `store_settings` (
 -- 1. Default Administrator
 INSERT INTO `admins` (`id`, `name`, `email`, `password_hash`, `role`, `phone`, `avatar_url`, `status`) VALUES
 (1, 'M. Asif', 'admin@shoeslab.pk', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Store Director', '+92 300 8472911', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop', 'Active');
+
+-- 2. Store Configuration Defaults
+INSERT INTO `store_settings` (`setting_group`, `setting_key`, `setting_value`, `description`) VALUES
+('general', 'brand_name', 'SHOES LAB', 'Public brand identity'),
+('contact', 'helpline_phone', '+92 300 8472911', 'Customer helpline phone number'),
+('contact', 'support_email', 'concierge@shoeslab.pk', 'Customer support email address'),
+('logistics', 'delivery_fee_pkr', '250.00', 'Standard domestic shipping charge'),
+('logistics', 'free_delivery_threshold_pkr', '10000.00', 'Cart threshold for complimentary delivery'),
+('logistics', 'delivery_estimate', '2-3 business days for major cities (Lahore, Karachi, Islamabad); 3-5 days nationwide.', 'Customer delivery timeline estimate'),
+('policies', 'exchange_policy', '15-Day Complimentary Doorstep Exchange for sizing adjustment.', 'Exchange and sizing adjustment policy');
+
 
