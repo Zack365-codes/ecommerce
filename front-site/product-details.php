@@ -110,14 +110,14 @@ if (count($related_products) < 4) {
         <div class="col-lg-7 product-gallery-container">
           <div class="product-gallery-main position-relative">
             <span class="badge bg-dark position-absolute top-0 start-0 m-3 text-uppercase px-2 py-1"><?php echo htmlspecialchars($brand_name); ?></span>
-            <img id="mainProductImage" src="<?php echo htmlspecialchars($main_image_url); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" style="width: 100%; max-height: 520px; object-fit: cover;">
+            <img id="mainProductImage" src="<?php echo htmlspecialchars($main_image_url); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" style="width: 100%; max-height: 520px; object-fit: cover;" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?q=80&w=800&auto=format&fit=crop';">
           </div>
 
           <!-- Thumbnails -->
           <div class="row g-2 mt-2">
             <div class="col-3">
               <div class="product-thumb-item active" data-img-src="<?php echo htmlspecialchars($main_image_url); ?>">
-                <img src="<?php echo htmlspecialchars($main_image_url); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" style="width: 100%; height: 80px; object-fit: cover;">
+                <img src="<?php echo htmlspecialchars($main_image_url); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" style="width: 100%; height: 80px; object-fit: cover;" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?q=80&w=800&auto=format&fit=crop';">
               </div>
             </div>
           </div>
@@ -355,7 +355,7 @@ if (count($related_products) < 4) {
               <div class="product-card h-100 d-flex flex-column justify-content-between">
                 <div class="product-img-wrap position-relative">
                   <a href="<?php echo $rel_link; ?>">
-                    <img src="<?php echo htmlspecialchars($rel_img); ?>" alt="<?php echo htmlspecialchars($rel['name']); ?>" loading="lazy" style="width: 100%; height: 240px; object-fit: cover;">
+                    <img src="<?php echo htmlspecialchars($rel_img); ?>" alt="<?php echo htmlspecialchars($rel['name']); ?>" loading="lazy" style="width: 100%; height: 240px; object-fit: cover;" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?q=80&w=800&auto=format&fit=crop';">
                   </a>
                   <div class="product-quick-actions">
                     <a href="<?php echo $rel_link; ?>" class="quick-view-btn text-decoration-none">

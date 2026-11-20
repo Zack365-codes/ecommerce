@@ -50,24 +50,28 @@ function get_product_image_url($image_path, $fallback = null) {
         return $image_path;
     }
 
-    // Relative to dashboard uploads (standard in ecomdb: uploads/products/...)
     $clean_path = ltrim($image_path, '/\\');
-    
-    // Check if dashboard upload exists on disk
-    $dashboard_disk_path = __DIR__ . '/../../dashboard/' . $clean_path;
-    if (file_exists($dashboard_disk_path)) {
-        return '../dashboard/' . $clean_path;
-    }
 
-    // Check if front-site upload exists
+    // 1. Check if front-site upload exists (direct relative path e.g. uploads/products/...)
     $front_disk_path = __DIR__ . '/../' . $clean_path;
     if (file_exists($front_disk_path)) {
         return $clean_path;
     }
 
-    // If path starts with uploads/, return relative to dashboard
+    // 2. Check if dashboard upload exists on disk
+    $dashboard_disk_path = __DIR__ . '/../../dashboard/' . $clean_path;
+    if (file_exists($dashboard_disk_path)) {
+        $parent_dir = dirname($front_disk_path);
+        if (!is_dir($parent_dir)) {
+            @mkdir($parent_dir, 0777, true);
+        }
+        @copy($dashboard_disk_path, $front_disk_path);
+        return $clean_path;
+    }
+
+    // 3. If starts with uploads/ return clean_path
     if (strpos($clean_path, 'uploads/') === 0) {
-        return '../dashboard/' . $clean_path;
+        return $clean_path;
     }
 
     return $fallback;
@@ -249,6 +253,22 @@ function get_products($filters = []) {
         error_log("get_products error: " . $e->getMessage());
         return [];
     }
+}
+
+/**
+ * Helper alias for single product or products list (prevents undefined function errors)
+ */
+function get_product($param = null) {
+    if (is_array($param)) {
+        return get_products($param);
+    }
+    if (is_numeric($param)) {
+        return get_product_by_id_or_slug((int)$param);
+    }
+    if (is_string($param)) {
+        return get_product_by_id_or_slug(null, $param);
+    }
+    return get_products();
 }
 
 /**

@@ -250,7 +250,8 @@ if (empty($available_sizes)) {
                         <img src="<?php echo htmlspecialchars($img_src); ?>" 
                              alt="<?php echo htmlspecialchars($prod['name']); ?>" 
                              loading="lazy" 
-                             style="width: 100%; height: 260px; object-fit: cover;">
+                             style="width: 100%; height: 260px; object-fit: cover;"
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?q=80&w=800&auto=format&fit=crop';">
                       </a>
                       <div class="product-quick-actions">
                         <a href="<?php echo $prod_link; ?>" class="quick-view-btn text-decoration-none">
